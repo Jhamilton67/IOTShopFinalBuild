@@ -1,0 +1,138 @@
+﻿@page "/Replen"
+
+
+@using IOTShopDataAccess
+@using IOTShopDataAccess.Models
+@using IOTShopDataAccess.Data
+@using IOTShopFrontEnd.Models
+
+@inject IReplenData _stock
+
+<AuthorizeView Context="Login">
+    <Authorized Context="UserNeedsToLogin">
+
+        <div class="jumbotron">
+            <h1>Replen</h1>
+            <h4>Replen sheet can be edited to remember what stock has been fufilled</h4>
+        </div>
+        <br />
+        <body style="background-color:sandybrown">
+
+            <EditForm class="form-inline my-2 " Model="@editstocks" OnValidSubmit="@EditReplenData">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <label>
+                    StockID: <br />
+                    <InputText class="form-control mx-1" id="stockid" @bind-Value="editstocks.StockID"></InputText>
+                </label>
+                <br />
+                <label>
+                    Stock Type: <br />
+                    <InputText class="form-control mx-1" id="stockType" @bind-Value="editstocks.StockType"></InputText>
+                </label>
+                <br />
+                <label>
+                    Stock Type Size: <br />
+                    <InputText class="form-control mx-1" id="stockTypesize" @bind-Value="editstocks.StockTypeSize"></InputText>
+                </label>
+                <br />
+                <label>
+                    Stock Type Quantity: <br />
+                    <InputText class="form-control mx-1" id="stockquantity" @bind-Value="editstocks.StockTypeQuantityNeeded"></InputText>
+                </label>
+                <br />
+                <br />
+                <br />
+                <button type="submit" class="btn-btn-primary">Submit Data</button>
+
+
+            </EditForm>
+            <br />
+            <br />
+
+            <h4>Current Replen</h4>
+            @if (replens is null)
+            {
+                <p><em>Loading Data....</em></p>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="list-group-flush">
+                            <th>StockID</th>
+                            <th>Stock Type</th>
+                            <th>Stock Type Size</th>
+                            <th>Stock Type Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stock in replens)
+                        {
+                            <tr class="list-group-flush">
+                                <td>@stock.StockID</td>
+                                <td>@stock.StockType</td>
+                                <td>@stock.StockTypeSize</td>
+                                <td>@stock.StockTypeQuantityNeeded</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+        </body>
+
+    </Authorized>
+    <NotAuthorized Context="Login">
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+
+    private List<ReplenModel> replens;
+    private DisplayReplenModel editstocks = new DisplayReplenModel();
+
+    protected override async Task OnInitializedAsync()
+    {
+        replens = await _stock.GetReplens();
+
+    }
+
+    private async Task EditReplenData()
+    {
+        ReplenModel replen = new ReplenModel
+        {
+            StockID = editstocks.StockID,
+            StockType = editstocks.StockType,
+            StockTypeSize = editstocks.StockTypeSize,
+            StockTypeQuantityNeeded = editstocks.StockTypeQuantityNeeded
+        };
+
+        await _stock.InsertReplen(replen);
+
+        replens.Add(replen);
+
+        editstocks = new DisplayReplenModel();
+    }
+
+
+
+}
+
+

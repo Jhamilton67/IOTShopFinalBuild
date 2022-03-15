@@ -1,0 +1,90 @@
+﻿@page "/StockLevels"
+
+
+@using IOTShopDataAccess
+@using IOTShopDataAccess.Models
+@using IOTShopDataAccess.Data
+@using IOTShopFrontEnd.Models
+
+@inject IStockLevelsData _stock
+
+<AuthorizeView>
+    <Authorized>
+        <div class="jumbotron">
+            <h1>StockLevels</h1>
+        </div>
+
+        <div class="container-fluid">
+            @if (stocks is null)
+            {
+                <div class="row">
+                    <p>
+                        Loading Data....
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    @foreach (StockLevelsModel stock in stocks)
+                    {
+                        <div class="col-xl-4 col-lg-6 mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <a href="">
+                                            <img src="https://dummyimage.com/1200x900/000/fff" class="img-fluid" alt="Plaveholder image" />
+                                        </a>
+                                        <p class="my-2 text-justify">
+                                            @stock.StockID
+                                        </p>
+                                        <p class="mb-1">
+                                            @stock.StockType
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong>@stock.Quantity</strong>
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="h5 mb-3">@stock.StockLevels</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+@code {
+
+    private List<StockLevelsModel> stocks;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        stocks = await _stock.GetStockLevels();
+
+    }
+
+}

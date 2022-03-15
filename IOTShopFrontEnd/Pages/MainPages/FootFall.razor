@@ -1,0 +1,86 @@
+﻿@page "/FootFall"
+
+@using IOTShopDataAccess
+@using IOTShopDataAccess.Models
+@using IOTShopDataAccess.Data
+@using IOTShopFrontEnd.Models
+
+@inject IFootFallData _stock
+
+
+<div class="jumbotron">
+    <h1>FootFall</h1>
+    <p>Data From The Sensor which is recording Customer Foot Fall</p>
+</div>
+
+<AuthorizeView>
+    <Authorized>
+        <body style="background-color:sandybrown">
+
+
+            @if (stocks is null)
+            {
+                <p><em>Loading Data....</em></p>
+            }
+            else
+            {
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Foot Fall ID</th>
+                            <th>Foot Fall Counter</th>
+                            <th>Hourly</th>
+                            <th>Day</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stock in stocks)
+                        {
+                            <tr>
+                                <td>@stock.ID</td>
+                                <td>@stock.FootFallCounter</td>
+                                <td>@stock.Hourly</td>
+                                <td>@stock.Day</td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+        </body>
+    </Authorized>
+    <NotAuthorized>
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    private List<FootFallModel> stocks;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        stocks = await _stock.GetFootFall();
+
+    }
+
+}
+
+

@@ -1,0 +1,61 @@
+﻿@page "/"
+    <AuthorizeView>
+        <Authorized>
+            <body style="background-color:sandybrown">
+                <div class="jumbotron">
+                    <h1>IotShop</h1>
+                    <h2>Welcome to IotShop</h2>
+                    <p>This is a Prototype that  has be created for the Honours Project Module</p>
+                    <br />
+                    <h3>How The Impact of RFID can Help Inventory control and also increase Productivity in companies</h3>
+
+                </div>
+            </body>
+
+            <body style="font:bolder">
+
+                <div class="row">
+                    <div class="col-md-6  col-md-sm-4">
+                        <h2>About  IotShop</h2>
+                        <p>
+                            Iot-Shop has been designed to use RFID sensor and Ultra Sonic range sensor to collect data.
+                            This Program has been designed to help companies productivity levels, while using these Sensors.
+                        </p>
+                        <br />
+                        <p>
+                            Iot-Shop has been created using a number of frameworks, Programming languages
+                            and also a Architecture Style.
+
+                            Iot-Shops Front End is connected to a Arduino C++ Project, A data Class libary, local Database
+                            And also An API.
+
+                            The way that the program works is that it  uses the Arduino project code to connect to the Sensors
+                            then storing and view the data that the sensors have read/outputed to the programs UI.
+
+                        </p>
+                        <h3>Links to Websites of my Main Componets</h3>
+                        <p><a class="btn btn-default" href="https://lastminuteengineers.com/how-rfid-works-rc522-arduino-tutorial/">RFID Sensor &raquo;</a></p>
+                        <p><a class="btn btn-default" href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor">Blazor &raquo;</a></p>
+                        <p><a class="btn btn-default" href="https://www.arduino.cc/">Arduino  &raquo;</a></p>
+                    </div>
+                </div>
+
+            </body>
+        </Authorized>
+        <NotAuthorized>
+            <body style="background-color:sandybrown">
+                <div class="jumbotron-fluid">
+                    <div class="alert alert-danger" role="alert">
+                        <p>
+                            Please Login.
+
+                            If you're Having Trouble with Logging in Please Contact Admin Support.
+                        </p>
+
+                    </div>
+                </div>
+
+            </body>
+        </NotAuthorized>
+    </AuthorizeView>
+

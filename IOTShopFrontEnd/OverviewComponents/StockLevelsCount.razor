@@ -1,0 +1,75 @@
+﻿<h1>StockLevelsCount</h1>
+
+@using IOTShopDataAccess
+@using IOTShopDataAccess.Models
+@using IOTShopDataAccess.Data
+@using IOTShopFrontEnd.Models
+@using IOTShopFrontEnd.OverviewComponents
+
+@inject IStockLevelsData _stock
+
+<AuthorizeView>
+    <Authorized>
+        <body style="background-color:sandybrown">
+
+            <br />
+
+            @if (stocks is null)
+            {
+                <p><em>Loading Data....</em></p>
+            }
+            else
+            {
+                <table class="table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                StockLevels:
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stock in stocks)
+                        {
+                            <tr>
+                                <td>@stock.StockLevels</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+            }
+        </body>
+    </Authorized>
+    <NotAuthorized>
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    private List<StockLevelsModel> stocks;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        stocks = await _stock.GetStockLevels();
+
+    }
+
+}
+

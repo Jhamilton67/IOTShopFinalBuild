@@ -1,0 +1,50 @@
+﻿@page "/Overview"
+
+<AuthorizeView>
+    <Authorized>
+        <div class="jumbotron">
+            <h1>Overview</h1>
+            <p>An Overview of all of the Key Information and stats from the IotShop Sensors</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <StockTakeCount></StockTakeCount>
+            </div>
+            <br />
+            <br />
+            <div class="col-md-4">
+                <ReplenCount></ReplenCount>
+            </div>
+            <br />
+            <br />
+            <div class="col-md-4">
+                <StockLevelsCount> </StockLevelsCount>
+
+            </div>
+            <br />
+            <br />
+            <div class="col-md-4">
+                <FootFallCount></FootFallCount>
+            </div>
+
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+
+

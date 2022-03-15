@@ -1,0 +1,140 @@
+﻿@page "/StockTake"
+
+@using IOTShopDataAccess
+@using IOTShopDataAccess.Models
+@using IOTShopDataAccess.Data
+@using IOTShopFrontEnd.Models
+
+@inject IStockTakeData _stock
+
+<AuthorizeView>
+    <Authorized>
+        <div class="jumbotron">
+            <h1>StockTake</h1>
+            <br />
+            <div class="">
+                <h3>@DateTime.Now</h3>
+                <p>TimeStamp of When Last Stock Take Was Done</p>
+            </div>
+        </div>
+
+        <body style="background-color:sandybrown">
+
+            <br />
+            <button class="btn btn-primary" @onclick="UpdateData">Update Data</button>
+            <button class="btn btn-primary" @onclick="DeleteData">Delete Data</button>
+            <br />
+            <br />
+            @*<div class="progress my-2">
+                <div class="progress-bar-animated" role="progressbar"
+                     style="width: 85%"
+                     aria-valuemin="0"
+                     aria-valuemax="100">*@
+
+            @*</div>
+                </div>*@
+            <br />
+
+            @if (stocks is null)
+            {
+                <p><em>Loading Data....</em></p>
+            }
+            else
+            {
+                <table class="table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                StockTakeCount
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stock in stocks)
+                        {
+                            <tr>
+                                <td>@stock.StockTakeCount</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>StockID</th>
+                            <th>StockTypeSize</th>
+                            <th>StockTypePrice</th>
+                            <th>StockTypeColour</th>
+                            <th>StockTypeQuantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stock in stocks)
+                        {
+                            <tr>
+                                <td>@stock.StockID</td>
+                                <td>@stock.StockType</td>
+                                <td>@stock.StockTypeColour</td>
+                                <td>@stock.StockTypeSize</td>
+                                <td>@stock.StockTypeQuantity</td>
+                                <td>@stock.StockTypePrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+        </body>
+    </Authorized>
+    <NotAuthorized>
+        <body style="background-color:sandybrown">
+            <div class="jumbotron-fluid">
+                <div class="alert alert-danger" role="alert">
+                    <p>
+                        Please Login.
+
+                        If you're Having Trouble with Logging in Please Contact Admin Support.
+                    </p>
+
+                </div>
+            </div>
+
+        </body>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+    private List<StockTakeModel> stocks;
+
+    //private int percentDone
+    //{
+    //    get
+    //    {
+    //        return (stocks.Count(x => x.StockID) * 100) / stocks.Count;
+    //    }
+    //}
+
+    protected async Task UpdateData()
+    {
+
+
+    }
+
+    private async Task DeleteData()
+    {
+
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        stocks = await _stock.GetStockTakes();
+
+    }
+
+}
+
