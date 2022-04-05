@@ -1,0 +1,119 @@
+#include <LiquidCrystal.h> 
+LiquidCrystal lcdScreen(13, 12, 6, 5, 3, 2);
+//***************************************
+int LedPin = 10;
+int PIRPin = 4;
+int PIRState = LOW; 
+int PIRvalue = 0;
+int CurrentPIRState = 0;
+int PreviousPIRState = 0;
+
+/// include and defines for the Ultrasonic range sensor, also variables
+#include <HCSR04.h>
+#define Trigpin 8
+#define Echopin 7
+int counter = 0;
+int CurrentCounterState = 0;
+int PreviousCounterState = 0;
+long duration, distance;
+
+void LCDSetup()
+{
+  
+  lcdScreen.begin(16, 2);
+  lcdScreen.setCursor(0,2);
+  lcdScreen.print("FootFall Counter");
+}
+
+void PIRSetup()
+{
+  pinMode(LedPin, OUTPUT);
+  pinMode(PIRPin, INPUT);
+}
+
+void UltraSonicSetup()
+{
+  Serial.begin(9600);
+  pinMode(Trigpin, OUTPUT);
+  pinMode(Echopin, INPUT);
+  Serial.println("Counter of Products: ");
+
+}
+void LCDandPIRsensorLoop()
+{
+ PIRvalue = digitalRead(PIRPin);
+  if (PIRvalue == HIGH) 
+  {
+    digitalWrite(LedPin, HIGH);
+    if (PIRState == LOW) 
+    {
+      CurrentPIRState = 1;
+    }
+
+    PIRState = HIGH;
+    delay(1000);
+  }
+  else 
+  { digitalWrite(LedPin, LOW);
+    if (PIRState == HIGH)
+    {
+      CurrentPIRState = 0;
+      PIRState = LOW;
+    }
+  }
+
+  if(CurrentPIRState != PreviousPIRState)
+  {
+    if(CurrentPIRState == 1)
+    {
+      counter = counter + 1;
+      lcdScreen.setCursor(4,1);
+      lcdScreen.print(counter);
+      delay(200);
+    }
+  }
+}
+
+void UltraSonicSensorLoop()
+{
+  long duration, distance;
+  digitalWrite(Trigpin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(Trigpin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(Trigpin, LOW);
+  duration = pulseIn(Echopin, HIGH);
+  distance = (duration / 2) / 29.1;
+
+  if (distance <= 10)
+  {
+    CurrentCounterState = 1;
+  }
+  else
+  {
+    CurrentCounterState = 0;
+  }
+  delay(2000);
+  if (CurrentCounterState != PreviousCounterState)
+  {
+    if (CurrentCounterState == 1)
+    {
+      counter = counter + 1;
+      Serial.println(counter);
+    }
+  }
+}
+
+
+void setup()
+{
+  PIRSetup();
+  LCDSetup();
+  UltraSonicSetup();
+}
+
+void loop()
+{
+  LCDandPIRsensorLoop();
+  UltraSonicSensorLoop();
+}
