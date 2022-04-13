@@ -18,14 +18,14 @@ namespace IOTShopDataAccess.Data
 
         public Task<List<FootFallModel>> GetFootFall()
         {
-            string sql = "select  * from dbo.IOTShopDbFinal"; //Add in name of Database 
+            string sql = "select  * from dbo.FootFall"; //Add in name of Database 
 
             return _db.LoadData<FootFallModel, dynamic>(sql, new { });
         }
 
         public Task InsertFootFall(FootFallModel stock)
         {
-            string sql = @"insert into dbo.IOTShopDbFinal";// TODO Need tp add in Database then
+            string sql = @"insert into dbo.FootFall";// TODO Need tp add in Database then
                                                               //Then finish code for the query
 
             return _db.SaveData(sql, stock);

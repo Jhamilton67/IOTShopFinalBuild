@@ -8,5 +8,10 @@ namespace IOTShopDataAccess.Data
     {
         Task<List<StockTakeModel>> GetStockTakes();
         Task InsertStock(StockTakeModel stock);
+        //Need to Test 
+        Task DeleteStockTake(int id);
+        Task<List<StockTakeModel>> GetStockTakesData();
+        Task<StockTakeModel> StockTakeModelID(int id);
+        Task UpdateStockTake(StockTakeModel stock);
     }
 }

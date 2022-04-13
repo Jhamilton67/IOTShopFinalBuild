@@ -19,14 +19,15 @@ namespace IOTShopDataAccess.Data
 
         public Task<List<ReplenModel>> GetReplens()
         {
-            string sql = "select  * from dbo.IOTShopDbFinal";
+            string sql = "select  * from dbo.Replen";
 
             return _db.LoadData<ReplenModel, dynamic>(sql, new { });
         }
 
         public Task InsertReplen(ReplenModel stock)
         {
-            string sql = @"insert into dbo.IOTShopDbFinal";//TODO Need tp add in Database then
+            string sql = @"insert into dbo.Replen(StockID, Replen Count, StockType, StockTypeSize, StockTypeQuantityNeeded)
+                           values (@StockID, @Replen Count, @StockType, @StockTypeSize, @StockTypeQuantityNeeded);";//TODO Need tp add in Database then
                                                               //Then finish code for the query
             return _db.SaveData(sql, stock);
         }

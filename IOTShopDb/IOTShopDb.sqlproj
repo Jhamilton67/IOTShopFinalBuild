@@ -70,5 +70,25 @@
     <Build Include="Tables\StockTake.sql" />
     <Build Include="Tables\StockLevels.sql" />
     <Build Include="Tables\Replen.sql" />
+    <Build Include="StoredProcedures\StockTake\StockTake_CountPercent.sql" />
+    <Build Include="StoredProcedures\StockTake\StockTake_Delete.sql" />
+    <Build Include="StoredProcedures\StockTake\StockTake_GetAll.sql" />
+    <Build Include="StoredProcedures\StockTake\StockTake_Insert.sql" />
+    <Build Include="StoredProcedures\StockTake\StockTake_Update.sql" />
+    <Build Include="StoredProcedures\FootFall\FootFall_Delete.sql" />
+    <Build Include="StoredProcedures\FootFall\FootFall_GetAll.sql" />
+    <Build Include="StoredProcedures\FootFall\FootFall_Insert.sql" />
+    <Build Include="StoredProcedures\FootFall\FootFall_Percentage.sql" />
+    <Build Include="StoredProcedures\FootFall\FootFall_Update.sql" />
+    <Build Include="StoredProcedures\StockLevels\StockLevels_Update.sql" />
+    <Build Include="StoredProcedures\StockLevels\StockLevels_Percentage.sql" />
+    <Build Include="StoredProcedures\StockLevels\StockLevels_Insert.sql" />
+    <Build Include="StoredProcedures\StockLevels\StockLevels_GetAll.sql" />
+    <Build Include="StoredProcedures\StockLevels\StockLevels_Delete.sql" />
+    <Build Include="StoredProcedures\Replen\Replen_Delete.sql" />
+    <Build Include="StoredProcedures\Replen\Replen_GetAll.sql" />
+    <Build Include="StoredProcedures\Replen\Replen_Insert.sql" />
+    <Build Include="StoredProcedures\Replen\Replen_Percentage.sql" />
+    <Build Include="StoredProcedures\Replen\Replen_Update.sql" />
   </ItemGroup>
 </Project>

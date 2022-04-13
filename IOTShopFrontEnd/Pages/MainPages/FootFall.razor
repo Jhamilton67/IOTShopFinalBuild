@@ -8,13 +8,15 @@
 @inject IFootFallData _stock
 
 
-<div class="jumbotron">
-    <h1>FootFall</h1>
-    <p>Data From The Sensor which is recording Customer Foot Fall</p>
-</div>
+
 
 <AuthorizeView>
     <Authorized>
+        <div class="jumbotron">
+            <h1>FootFall</h1>
+            <p>Data From The Sensor which is recording Customer Foot Fall</p>
+        </div>
+
         <body style="background-color:sandybrown">
 
 
@@ -26,7 +28,7 @@
             {
                 <br />
                 <br />
-                <table class="table table-striped">
+                <table class="table table-secondary">
                     <thead>
                         <tr>
                             <th>Foot Fall ID</th>

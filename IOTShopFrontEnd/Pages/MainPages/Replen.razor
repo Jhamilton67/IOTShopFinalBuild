@@ -22,6 +22,12 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
+
+                <label>
+                    Replen Counter: <br />
+                    <InputText class="form-control mx-1" id="replenCount" @bind-Value="editstocks.ReplenCounter"></InputText>
+                </label>
+                <br />
                 <label>
                     StockID: <br />
                     <InputText class="form-control mx-1" id="stockid" @bind-Value="editstocks.StockID"></InputText>
@@ -44,6 +50,7 @@
                 <br />
                 <br />
                 <br />
+                <br />
                 <button type="submit" class="btn-btn-primary">Submit Data</button>
 
 
@@ -58,31 +65,48 @@
             }
             else
             {
-                <table class="table table-striped">
+                <table class="table table-secondary">
                     <thead>
-                        <tr class="list-group-flush">
-                            <th>StockID</th>
-                            <th>Stock Type</th>
-                            <th>Stock Type Size</th>
-                            <th>Stock Type Quantity</th>
+                        <tr>
+                            <th>
+                                Replen Counter 
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var stock in replens)
                         {
-                            <tr class="list-group-flush">
-                                <td>@stock.StockID</td>
-                                <td>@stock.StockType</td>
-                                <td>@stock.StockTypeSize</td>
-                                <td>@stock.StockTypeQuantityNeeded</td>
-
+                            <tr>
+                                <td>@stock.ReplenCount</td>
                             </tr>
-                        }
+                         }
                     </tbody>
                 </table>
-            }
+                    <table class="table table-secondary">
+                        <thead>
+                            <tr class="list-group-flush">
+                                <th>StockID</th>
+                                <th>Stock Type</th>
+                                <th>Stock Type Size</th>
+                                <th>Stock Type Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var stock in replens)
+                            {
+                                <tr class="list-group-flush">
+                                    <td>@stock.StockID</td>
+                                    <td>@stock.StockType</td>
+                                    <td>@stock.StockTypeSize</td>
+                                    <td>@stock.StockTypeQuantityNeeded</td>
 
-        </body>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    }
+
+            </body>
 
     </Authorized>
     <NotAuthorized Context="Login">
@@ -118,10 +142,12 @@
     {
         ReplenModel replen = new ReplenModel
         {
-            StockID = editstocks.StockID,
+           
             StockType = editstocks.StockType,
             StockTypeSize = editstocks.StockTypeSize,
-            StockTypeQuantityNeeded = editstocks.StockTypeQuantityNeeded
+            StockTypeQuantityNeeded = editstocks.StockTypeQuantityNeeded,
+            ReplenCount = editstocks.ReplenCounter,
+            StockID = editstocks.StockID
         };
 
         await _stock.InsertReplen(replen);

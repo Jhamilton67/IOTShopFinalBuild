@@ -8,7 +8,7 @@ namespace IOTShopDataAccess.Models
 {
     public class OverviewModel
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string FootFallCounter { get; set; }
         public DateTime Hourly { get; set; }
         public DateTimeOffset Day { get; set; }

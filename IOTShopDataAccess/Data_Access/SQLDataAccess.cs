@@ -15,7 +15,7 @@ namespace IOTShopDataAccess.Data_Access
 
         private readonly IConfiguration _config;
 
-        public string ConnectionStringName { get; set; } = "IOTShopDbFinal";
+        public string ConnectionStringName { get; set; } = "IOTShopFinalDBV2";
 
         public SQLDataAccess(IConfiguration configuration)
         {

@@ -90,5 +90,22 @@ typedef void *__builtin_va_list;
 #define pgm_read_ptr(address_short)   short()
 
 #include "IotShopSensorCode.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\A2Printer\A2Printer.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Bitmap\Bitmap.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Chess\Chess.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Console\Console.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\F\F.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\FPS\FPS.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\GraphicsTest\GraphicsTest.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\HelloWorld\HelloWorld.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Menu\Menu.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\PrintTest\PrintTest.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Rotation\Rotation.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Scale\Scale.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\TextRotX\TextRotX.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Touch4WSetup\Touch4WSetup.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\Touch4WTest\Touch4WTest.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\U8gLogo\U8gLogo.ino"
+#include "..\..\..\..\U8glib_Arduino-1.19.1\U8glib_Arduino-1.19.1\examples\XBM\XBM.ino"
 #endif
 #endif

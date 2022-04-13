@@ -4,6 +4,19 @@
  Author:	user
 */
 
+//Defining Pin Numbers & variables for Ultrasonic Range Sensor  
+const int Tringpin = 8;
+const int Echopin = 7;
+long duration;
+int distance;
+
+void UltraSonicRangeSensor()
+{
+	pinMode(Tringpin, OUTPUT);
+	pinMode(Echopin, INPUT);
+	Serial.begin(9600);
+}
+
 // the setup function runs once when you press reset or power the board
 void setup() {
 

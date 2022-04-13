@@ -19,14 +19,14 @@ namespace IOTShopDataAccess.Data
 
         public Task<List<OverviewModel>> GetInfo()
         {
-            string sql = "select  * from dbo.IOTShopDbFinal"; //TODO Add in name of Database 
+            string sql = "select  * from dbo.Overview"; //TODO Add in name of Database 
 
             return _db.LoadData<OverviewModel, dynamic>(sql, new { });
         }
 
         public Task InsertInfo(StockTakeModel stock)
         {
-            string sql = @"insert into dbo.IOTShopDbFinal";//Need tp add in Database then
+            string sql = @"insert into dbo.Overview";//Need tp add in Database then
                                                               //Then finish code for the query
 
             return _db.SaveData(sql, stock);

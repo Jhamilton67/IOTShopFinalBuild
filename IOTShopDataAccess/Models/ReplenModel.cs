@@ -9,7 +9,7 @@ namespace IOTShopDataAccess.Models
     public class ReplenModel
     {
         public string StockID { get; set; }
-        public int ReplenCount { get; set; }
+        public string ReplenCount { get; set; }
         public string StockType { get; set; }
         public string StockTypeSize { get; set; }
         public string StockTypeQuantityNeeded { get; set; }

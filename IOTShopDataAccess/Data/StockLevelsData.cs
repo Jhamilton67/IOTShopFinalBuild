@@ -20,14 +20,14 @@ namespace IOTShopDataAccess.Data
 
         public Task<List<StockLevelsModel>> GetStockLevels()
         {
-            string sql = "select  * from dbo.IOTShopDbFinal"; //TODO Add in name of Database 
+            string sql = "select  * from dbo.StockLevels"; //TODO Add in name of Database 
 
             return _db.LoadData<StockLevelsModel, dynamic>(sql, new { });
         }
 
         public Task InsertStockLevels(StockLevelsModel stock)
         {
-            string sql = @"insert into dbo.IOTShopDbFinal";//Need tp add in Database then
+            string sql = @"insert into dbo.StockLevels";//Need tp add in Database then
                                                               //Then finish code for the query
             return _db.SaveData(sql, stock);
         }
