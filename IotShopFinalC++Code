@@ -1,77 +1,74 @@
+String VERSION = "3.0";
+#define APP_NAME "IotShop"
+//*****************************************
 #include <LiquidCrystal.h> 
-LiquidCrystal lcdScreen(13, 12, 6, 5, 3, 2);
+LiquidCrystal lcdScreen(3, 4, 7, 8, 11, 12);
 //***************************************
-int LedPin = 10;
-int PIRPin = 4;
+int LedPin = 1;
+int PIRPin = 2;
 int PIRState = LOW; 
 int PIRvalue = 0;
+int PIRCounter = 0;
 int CurrentPIRState = 0;
 int PreviousPIRState = 0;
-
+//*******************************************
 /// include and defines for the Ultrasonic range sensor, also variables
 #include <HCSR04.h>
-#define Trigpin 8
-#define Echopin 7
+#define Trigpin 6
+#define Echopin 5
 int counter = 0;
 int CurrentCounterState = 0;
 int PreviousCounterState = 0;
 long duration, distance;
-
-void LCDSetup()
-{
-  
-  lcdScreen.begin(16, 2);
-  lcdScreen.setCursor(0,2);
-  lcdScreen.print("FootFall Counter");
-}
-
-void PIRSetup()
+//********************************************
+#include <SPI.h> //Serial Bus lib 
+#include <MFRC522.h>//RFID sensor Lib
+#define RST_PIN 9 //Reset pin on RFID sensor 
+#define SS_PIN 10//SDA pin on RFID sensor 
+MFRC522 RFIDreader(SS_PIN, RST_PIN);//Pin method 
+//******************************************
+void PIR_LCDSetup()
 {
   pinMode(LedPin, OUTPUT);
   pinMode(PIRPin, INPUT);
+  lcdScreen.begin(16, 2);
+  lcdScreen.setCursor(0,0);
+  lcdScreen.print("FootFall Counter");
 }
 
-void UltraSonicSetup()
-{
-  Serial.begin(9600);
-  pinMode(Trigpin, OUTPUT);
-  pinMode(Echopin, INPUT);
-  Serial.println("Counter of Products: ");
-
-}
 void LCDandPIRsensorLoop()
 {
- PIRvalue = digitalRead(PIRPin);
+  PIRvalue = digitalRead(PIRPin); // read PIR sensor input value
   if (PIRvalue == HIGH) 
-  {
-    digitalWrite(LedPin, HIGH);
+  { 
+    digitalWrite(LedPin, HIGH); // turn LED ON
     if (PIRState == LOW) 
     {
+      Serial.println("Motion Detected");
       CurrentPIRState = 1;
+      PIRState = HIGH;
+      delay(100);
     }
-
-    PIRState = HIGH;
-    delay(1000);
-  }
-  else 
-  { digitalWrite(LedPin, LOW);
-    if (PIRState == HIGH)
+  } else  
     {
-      CurrentPIRState = 0;
-      PIRState = LOW;
-    }
-  }
-
-  if(CurrentPIRState != PreviousPIRState)
-  {
-    if(CurrentPIRState == 1)
+      digitalWrite(LedPin, LOW); // turn LED OFF
+      if (PIRState == HIGH)
+      {
+        Serial.println("Motion Stopped");
+        CurrentPIRState = 0;
+        PIRState = LOW;
+      }
+    }    
+    if(CurrentPIRState != PreviousPIRState)
     {
-      counter = counter + 1;
-      lcdScreen.setCursor(4,1);
-      lcdScreen.print(counter);
-      delay(200);
+      if(CurrentPIRState == 1)
+      {
+        PIRCounter = PIRCounter + 1;
+        lcdScreen.setCursor(6,1);
+        lcdScreen.print(PIRCounter);
+        delay(200);
+       }
     }
-  }
 }
 
 void UltraSonicSensorLoop()
@@ -93,7 +90,7 @@ void UltraSonicSensorLoop()
   {
     CurrentCounterState = 0;
   }
-  delay(2000);
+  delay(20);
   if (CurrentCounterState != PreviousCounterState)
   {
     if (CurrentCounterState == 1)
@@ -104,16 +101,56 @@ void UltraSonicSensorLoop()
   }
 }
 
+void RFIDLoop()
+{
+  if ( ! RFIDreader.PICC_IsNewCardPresent()) {
+    return;
+  }
+
+
+  if ( ! RFIDreader.PICC_ReadCardSerial()) {
+    return;
+  }
+
+  char string[32] = "";
+  ArrayToString(RFIDreader.uid.uidByte, 4, string);
+  Serial.print(string);
+  RFIDreader.PICC_HaltA();
+
+}
 
 void setup()
 {
-  PIRSetup();
-  LCDSetup();
-  UltraSonicSetup();
+   Serial.begin(9600);
+   PIR_LCDSetup();
+
+    //SPI.begin();      
+    //RFIDreader.PCD_Init();   
+    Serial.println("Scan RFID Tag: ");
+
+  //Ultrasonic Sensor
+  pinMode(Trigpin, OUTPUT);
+  pinMode(Echopin, INPUT);
+  Serial.println("Counter of Products: ");
+  
 }
 
 void loop()
 {
   LCDandPIRsensorLoop();
   UltraSonicSensorLoop();
+  //RFIDLoop();
 }
+
+void ArrayToString(byte array[], unsigned int len, char buffer[])
+{
+   for (unsigned int i = 0; i < len; i++)
+   {
+      byte nib1 = (array[i] >> 4) & 0x0F;
+      byte nib2 = (array[i] >> 0) & 0x0F;
+      buffer[i*2+0] = nib1  < 0xA ? '0' + nib1  : 'A' + nib1  - 0xA;
+      buffer[i*2+1] = nib2  < 0xA ? '0' + nib2  : 'A' + nib2  - 0xA;
+   }
+   buffer[len*2] = '\0';
+}
+   
