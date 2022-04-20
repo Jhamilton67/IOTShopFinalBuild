@@ -10,17 +10,22 @@ namespace IOTShopFrontEnd.Models
     {
         [Required]
         [StringLength(50, ErrorMessage = "Data is too long")]
+        [MinLength(5, ErrorMessage = "Data is too short")]
         public string ReplenCounter { get; set; }
         [StringLength(50, ErrorMessage = "Data is too long")]
+        [MinLength(1, ErrorMessage = "Data is too short")]
         public string StockID { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "Data is too long")]
+        [MinLength(5, ErrorMessage = "Data is too short")]
         public string StockType { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "Data is too long")]
+        [MinLength(1, ErrorMessage = "Data is too short")]
         public string StockTypeSize { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "Data is too long")]
+        [MinLength(1, ErrorMessage = "Data is too short")]
         public string StockTypeQuantityNeeded { get; set; }
     }
 }
