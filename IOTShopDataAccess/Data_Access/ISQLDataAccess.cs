@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using IOTShopDataAccess.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace IOTShopDataAccess.Data_Access
@@ -8,5 +9,6 @@ namespace IOTShopDataAccess.Data_Access
         string ConnectionStringName { get; set; }
         Task<List<T>> LoadData<T, U>(string sql, U parameters);
         Task SaveData<T>(string sql, T parameters);
+        
     }
 }
