@@ -1,12 +1,12 @@
-﻿
-
+﻿using IOTShopAPI.Models;
 using IOTShopAPI.Repository;
-using IOTShopDataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace IOTShopAPI.Controllers
 {
@@ -14,48 +14,53 @@ namespace IOTShopAPI.Controllers
     [ApiController]
     public class ReplenController : ControllerBase
     {
-        private readonly MainRepo main;
+        private readonly ReplenRepo replen;
 
         public ReplenController()
         {
-            main = new MainRepo();
+            replen = new ReplenRepo();
         }
 
+        // GET: api/<ReplenControllerAPI>
         [HttpGet]
-        public IEnumerable<ReplenModel> GET()
+        public IEnumerable<ReplenClass> Get()
         {
-            return main.GetAllReplenData();
+            return replen.GetAll();
         }
 
+        // GET api/<ReplenControllerAPI>/5
         [HttpGet("{id}")]
-        public ReplenModel GetId(int id)
+        public ReplenClass Get(int id)
         {
-            return main.RGETByID(id);
+            return replen.GetAllByID(id);
         }
 
+        // POST api/<ReplenControllerAPI>
         [HttpPost]
-        public void Post([FromBody] ReplenModel stockTake)
+        public void Post([FromBody] ReplenClass replens)
         {
             if (ModelState.IsValid)
             {
-                main.AddReplenData(stockTake);
+                replen.AddData(replens);
             }
         }
 
+        // PUT api/<ReplenControllerAPI>/5
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody] ReplenModel stockTake)
+        public void Put(int id, [FromBody] ReplenClass replenns)
         {
-            stockTake.StockID = id;
+            replenns.StockID = id;
             if (ModelState.IsValid)
             {
-                main.UpdateR(stockTake);
+                replen.Update(replenns);
             }
         }
 
-        [HttpDelete]
+        // DELETE api/<ReplenControllerAPI>/5
+        [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            main.DeleteR(id);
+            replen.Delete(id);
         }
     }
 }

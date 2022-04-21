@@ -1,5 +1,5 @@
-﻿using IOTShopAPI.Repository;
-using IOTShopDataAccess.Models;
+﻿using IOTShopAPI.Models;
+using IOTShopAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,48 +14,54 @@ namespace IOTShopAPI.Controllers
     [ApiController]
     public class FootFallController : ControllerBase
     {
-        private readonly MainRepo main;
+        private readonly FootFallRepo footFall;
 
         public FootFallController()
         {
-            main = new MainRepo();
+            footFall = new FootFallRepo();
         }
 
+        // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<FootFallModel> GET()
+        public IEnumerable<FootFallClass> Get()
         {
-            return main.GetAllFootFallData();
+            return footFall.GetAll();
         }
 
+        // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public FootFallModel GetId(int id)
+        public FootFallClass Get(int id)
         {
-            return main.FLGETByID(id);
+            return footFall.GetAllByID(id);
         }
 
+        // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] FootFallModel stockTake)
+        public void Post([FromBody] FootFallClass foot)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                main.AddFootFallData(stockTake);
+                footFall.AddData(foot);
             }
         }
 
+        // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] FootFallModel stockTake)
+        public void Put(int id, [FromBody] FootFallClass foots)
         {
-            stockTake.ID = id;
+
             if (ModelState.IsValid)
             {
-                main.UpdateF(stockTake);
+                footFall.Update(foots);
             }
         }
 
-        [HttpDelete]
+        // DELETE api/<ValuesController>/5
+        [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            main.DeleteF(id); 
+
+            footFall.Delete(id);
         }
     }
 }

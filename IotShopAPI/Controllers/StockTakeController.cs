@@ -1,61 +1,65 @@
-﻿
-using IOTShopAPI.Repository;
-using IOTShopDataAccess.Models;
-using Microsoft.AspNetCore.Http;
+﻿using IOTShopAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IOTShopAPI.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace IOTShopAPI
 {
     [Route("api/[controller]")]
     [ApiController]
     public class StockTakeController : ControllerBase
     {
-        private readonly MainRepo main;
-        
+        private readonly StockTakeRepo stockTake;
+
         public StockTakeController()
         {
-            main = new MainRepo();
-        }
-        // GET: api/<OverviewController>
-        [HttpGet]
-        public IEnumerable<StockTakeModel> GET()
-        {
-            return main.GetAllTakeModels(); 
-        }
-        // GET api/<OverviewController>/5
-        [HttpGet("{id}")]
-        public StockTakeModel GetId(int id)
-        {
-            return main.GETByID(id);
+            stockTake = new StockTakeRepo();
         }
 
-        // POST api/<OverviewController>
+        // GET: api/<StockTakeControllerAPI>
+        [HttpGet]
+        public IEnumerable<StockTakeClass> Get()
+        {
+            return stockTake.GetAll();
+        }
+
+        // GET api/<StockTakeControllerAPI>/5
+        [HttpGet("{id}")]
+        public StockTakeClass Get(int id)
+        {
+            return stockTake.GetAllByID(id);
+        }
+
+        // POST api/<StockTakeControllerAPI>
         [HttpPost]
-        public void Post([FromBody] StockTakeModel stockTake)
+        public void Post([FromBody] StockTakeClass Stocks)
         {
             if(ModelState.IsValid)
             {
-                main.AddStockTakeData(stockTake);
+                stockTake.AddData(Stocks);
             }
         }
-        // PUT api/<OverviewController>/5
+
+        // PUT api/<StockTakeControllerAPI>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] StockTakeModel stockTake)
+        public void Put(int id, [FromBody] StockTakeClass stock)
         {
-            stockTake.StockID = id;
+            stock.StockID = id;
             if (ModelState.IsValid)
             {
-                main.Update(stockTake);
+                stockTake.Update(stock);
             }
         }
-        // DELETE api/<OverviewController>/5
-        [HttpDelete]
+
+        // DELETE api/<StockTakeControllerAPI>/5
+        [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            main.Delete(id);
+            stockTake.Delete(id); 
         }
     }
 }

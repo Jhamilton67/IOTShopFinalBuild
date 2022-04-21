@@ -29,12 +29,7 @@ namespace IotShopAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ISQLDataAccess, SQLDataAccess>();
-            services.AddSingleton<IStockTakeData, StockTakeData>();
-            services.AddSingleton<IStockLevelsData, StockLevelsData>();
-            services.AddSingleton<IReplenData, ReplenData>();
-            services.AddSingleton<IOverviewData, OverviewData>();
-            services.AddSingleton<IFootFallData, FootFallData>();
+           
             services.AddControllers();
           
             services.AddSwaggerGen(c =>
@@ -51,7 +46,6 @@ namespace IotShopAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IotShopAPI v1"));
-               
             }
 
             app.UseHttpsRedirection();
@@ -59,6 +53,11 @@ namespace IotShopAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers(); 
+            }); 
 
         }
        

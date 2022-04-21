@@ -1,5 +1,5 @@
-﻿using IOTShopAPI.Repository;
-using IOTShopDataAccess.Models;
+﻿using IOTShopAPI.Models;
+using IOTShopAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,48 +14,55 @@ namespace IOTShopAPI.Controllers
     [ApiController]
     public class StockLevelsController : ControllerBase
     {
-        private readonly MainRepo main;
+
+        private readonly StockLevelsRepo stockLevels;
 
         public StockLevelsController()
         {
-            main = new MainRepo();
+            stockLevels = new StockLevelsRepo();
         }
 
+
+        // GET: api/<StockLevelsController>
         [HttpGet]
-        public IEnumerable<StockLevelsModel> GET()
+        public IEnumerable<StockLevelsClass> Get()
         {
-            return main.GetAllStockLevels();
+            return stockLevels.GetAll();
         }
 
+        // GET api/<StockLevelsController>/5
         [HttpGet("{id}")]
-        public StockLevelsModel GetId(int id)
+        public StockLevelsClass Get(int id)
         {
-            return main.STLGETByID(id);
+            return stockLevels.GetAllByID(id);
         }
 
+        // POST api/<StockLevelsController>
         [HttpPost]
-        public void Post([FromBody] StockLevelsModel stockTake)
+        public void Post([FromBody] StockLevelsClass stocks)
         {
             if (ModelState.IsValid)
             {
-                main.AddStockLevelsData(stockTake);
+                stockLevels.AddData(stocks);
             }
         }
 
+        // PUT api/<StockLevelsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] StockLevelsModel stockTake)
+        public void Put(int id, [FromBody] StockLevelsClass stock)
         {
-            stockTake.ID = id;
+            stock.StockID = id;
             if (ModelState.IsValid)
             {
-                main.UpdateSL(stockTake);
+                stockLevels.Update(stock);
             }
         }
 
-        [HttpDelete]
+        // DELETE api/<StockLevelsController>/5
+        [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            main.DeleteSL(id);
+            stockLevels.Delete(id);
         }
     }
 }
